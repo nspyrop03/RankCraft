@@ -32,7 +32,7 @@ public class MainCore extends JavaPlugin {
 
           rankCraft = new RankCraft();
           rankCraft.saveSystem.load();
-
+          rankCraft.registerEvents();
      }
 
      @Override

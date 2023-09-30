@@ -88,4 +88,15 @@ public class PlayerStats implements ConfigurationSerializable {
           return maxMana;
      }
 
+     @Override
+     public String toString() {
+          return "PlayerStats[uuid="+this.uuid+"]:" +
+                  "\n- exp="+this.exp+
+                  "\n- level="+this.level+
+                  "\n- gold="+this.gold+
+                  "\n- blocksPlaced="+this.blocksPlaced+
+                  "\n- blocksBroken="+this.blocksBroken+
+                  "\n- mana="+this.mana+
+                  "\n- maxMana="+this.maxMana;
+     }
 }
