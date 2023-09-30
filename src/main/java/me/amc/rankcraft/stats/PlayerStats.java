@@ -6,9 +6,10 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import java.util.Map;
 import java.util.TreeMap;
 
-@SerializableAs("CharacterStats")
-public class CharacterStats implements ConfigurationSerializable {
+@SerializableAs("PlayerStats")
+public class PlayerStats implements ConfigurationSerializable {
 
+     private String uuid;
      private float exp;
      private int level;
      private float gold;
@@ -17,9 +18,10 @@ public class CharacterStats implements ConfigurationSerializable {
      private int mana;
      private int maxMana;
 
-     public CharacterStats(float exp, int level,
+     public PlayerStats(String uuid, float exp, int level,
                            float gold, int blocksPlaced,
                            int blocksBroken, int mana, int maxMana) {
+          this.uuid = uuid;
           this.exp = exp;
           this.level = level;
           this.gold = gold;
@@ -29,7 +31,8 @@ public class CharacterStats implements ConfigurationSerializable {
           this.maxMana = maxMana;
      }
 
-     public CharacterStats(Map<String, Object> map) {
+     public PlayerStats(Map<String, Object> map) {
+          this.uuid = (String) map.get("uuid");
           this.exp = (float) map.get("exp");
           this.level = (int) map.get("level");
           this.gold = (float) map.get("gold");
@@ -42,6 +45,7 @@ public class CharacterStats implements ConfigurationSerializable {
      @Override
      public Map<String, Object> serialize() {
           Map<String, Object> map = new TreeMap<String, Object>();
+          map.put("uuid", this.uuid);
           map.put("exp", this.exp);
           map.put("level", this.level);
           map.put("gold", this.gold);
@@ -50,6 +54,10 @@ public class CharacterStats implements ConfigurationSerializable {
           map.put("mana", this.mana);
           map.put("maxMana", this.maxMana);
           return map;
+     }
+
+     public String getUUID() {
+          return this.uuid;
      }
 
      public float getExp() {

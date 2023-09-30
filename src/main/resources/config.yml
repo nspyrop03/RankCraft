@@ -1,0 +1,12 @@
+# RankCraft configuration file
+
+# Enable database instead of file-based save system
+EnableDatabase: False
+
+# Database's options
+Database:
+  host: localhost
+  port: 3306
+  database: db
+  user: user
+  password: password
