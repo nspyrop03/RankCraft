@@ -1,5 +1,6 @@
 package me.amc.rankcraft;
 
+import me.amc.rankcraft.events.BlockStatsEvents;
 import me.amc.rankcraft.events.PlayerJoinQuitEvents;
 import me.amc.rankcraft.stats.SaveSystem;
 
@@ -13,6 +14,7 @@ public class RankCraft {
 
      public void registerEvents() {
           new PlayerJoinQuitEvents();
+          new BlockStatsEvents();
      }
 
 }

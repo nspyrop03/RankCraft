@@ -88,6 +88,42 @@ public class PlayerStats implements ConfigurationSerializable {
           return maxMana;
      }
 
+     public void setExp(float exp) {
+          this.exp = exp;
+     }
+
+     public void setLevel(int level) {
+          this.level = level;
+     }
+
+     public void setGold(float gold) {
+          this.gold = gold;
+     }
+
+     public void setBlocksPlaced(int blocksPlaced) {
+          this.blocksPlaced = blocksPlaced;
+     }
+
+     public void setBlocksBroken(int blocksBroken) {
+          this.blocksBroken = blocksBroken;
+     }
+
+     public void setMana(int mana) {
+          this.mana = mana;
+     }
+
+     public void setMaxMana(int maxMana) {
+          this.maxMana = maxMana;
+     }
+
+     public void addGold(float gold) {
+          setGold(getGold() + gold);
+     }
+
+     public void addExp(float exp) {
+          setExp(getExp() + exp);
+     }
+
      @Override
      public String toString() {
           return "PlayerStats[uuid="+this.uuid+"]:" +

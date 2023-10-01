@@ -37,6 +37,14 @@ public class SaveSystem {
           }
      }
 
+     public void setPlayerStats(String uuid, PlayerStats ps) {
+          psMap.put(uuid, ps);
+     }
+
+     public PlayerStats getPlayerStats(String uuid) {
+          return psMap.get(uuid);
+     }
+
      // Write data to file or to database
      public void save() {
           if(useDb) {
