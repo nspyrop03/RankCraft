@@ -1,5 +1,6 @@
 package me.amc.rankcraft;
 
+import me.amc.rankcraft.commands.RankCraftCommand;
 import me.amc.rankcraft.stats.StatsDatabase;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +34,9 @@ public class MainCore extends JavaPlugin {
           rankCraft = new RankCraft();
           rankCraft.saveSystem.load();
           rankCraft.registerEvents();
+
+          rankCraft.initSubCommands();
+          getCommand("rankcraft").setExecutor(new RankCraftCommand());
      }
 
      @Override
