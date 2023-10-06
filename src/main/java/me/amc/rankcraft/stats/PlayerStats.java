@@ -33,9 +33,9 @@ public class PlayerStats implements ConfigurationSerializable {
 
      public PlayerStats(Map<String, Object> map) {
           this.uuid = (String) map.get("uuid");
-          this.exp = (float) map.get("exp");
+          this.exp = ((Double)map.get("exp")).floatValue();
           this.level = (int) map.get("level");
-          this.gold = (float) map.get("gold");
+          this.gold = ((Double)map.get("gold")).floatValue();
           this.blocksPlaced = (int) map.get("blocksPlaced");
           this.blocksBroken = (int) map.get("blocksBroken");
           this.mana = (int) map.get("mana");

@@ -3,10 +3,12 @@ package me.amc.rankcraft.stats;
 import me.amc.rankcraft.MainCore;
 import me.amc.rankcraft.utils.RCUtils;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -48,21 +50,16 @@ public class SaveSystem {
      // Write data to file or to database
      public void save() {
           if(useDb) {
-               for(String uuid : psMap.keySet()) {
-                    try {
-                         MainCore.instance.statsDatabase.updatePlayerStats(uuid, psMap.get(uuid));
-                    } catch (SQLException e) {
-                         e.printStackTrace();
-                    }
+               try {
+                    saveToCloud(psMap);
+               } catch (SQLException ex) {
+                    MainCore.instance.getLogger().log(Level.SEVERE, "SaveSystem: Cloud Save Failed!", ex);
                }
           } else {
                try {
-                    YamlConfiguration stats = new YamlConfiguration();
-                    stats.createSection("playerStats", psMap);
-                    stats.save(new File(RCUtils.STATS_DIRECTORY, "stats.yml"));
-
+                    saveToLocal(psMap);
                } catch (Exception ex) {
-                    MainCore.instance.getLogger().log(Level.SEVERE, "SaveSystem: Save Failed!", ex);
+                    MainCore.instance.getLogger().log(Level.SEVERE, "SaveSystem: Local Save Failed!", ex);
                }
           }
 
@@ -72,31 +69,68 @@ public class SaveSystem {
      public void load(){
           if(useDb) {
                try {
-                    List<PlayerStats> psList = MainCore.instance.statsDatabase.findAllPlayerStats();
-                    for(PlayerStats ps : psList) {
-                         psMap.put(ps.getUUID(), ps);
-                    }
+                    psMap = loadFromCloud();
                } catch (SQLException e) {
                     e.printStackTrace();
                }
           } else {
                try {
-                    File stats = new File(RCUtils.STATS_DIRECTORY, "stats.yml");
-                    if (stats.exists()) {
-                         YamlConfiguration config = new YamlConfiguration();
-                         config.load(stats);
-
-                         ConfigurationSection section = config.getConfigurationSection("playerStats");
-                         for (String key : section.getKeys(false)) {
-                              PlayerStats ps = (PlayerStats) section.get(key);
-                              psMap.put(key, ps);
-                         }
-
-                    }
+                    psMap = loadFromLocal();
                } catch (Exception ex) {
                     MainCore.instance.getLogger().log(Level.SEVERE, "SaveSystem: Load Failed!", ex);
                }
           }
      }
 
+     private void saveToLocal(HashMap<String, PlayerStats> toLocal) throws IOException {
+          YamlConfiguration stats = new YamlConfiguration();
+          stats.createSection("playerStats", toLocal);
+          stats.save(new File(RCUtils.STATS_DIRECTORY, "stats.yml"));
+     }
+
+     private HashMap<String, PlayerStats> loadFromLocal() throws IOException, InvalidConfigurationException {
+          HashMap<String, PlayerStats> local = new HashMap<>();
+
+          File stats = new File(RCUtils.STATS_DIRECTORY, "stats.yml");
+          if (stats.exists()) {
+               YamlConfiguration config = new YamlConfiguration();
+               config.load(stats);
+
+               ConfigurationSection section = config.getConfigurationSection("playerStats");
+               for (String key : section.getKeys(false)) {
+                    PlayerStats ps = (PlayerStats) section.get(key);
+                    local.put(key, ps);
+               }
+          }
+          return local;
+
+     }
+
+     private void saveToCloud(HashMap<String, PlayerStats> toCloud) throws SQLException {
+          for(String uuid : toCloud.keySet())
+               MainCore.instance.statsDatabase.updatePlayerStats(uuid, toCloud.get(uuid));
+     }
+
+     private HashMap<String, PlayerStats> loadFromCloud() throws SQLException {
+          HashMap<String, PlayerStats> cloud = new HashMap<>();
+          List<PlayerStats> psList = MainCore.instance.statsDatabase.findAllPlayerStats();
+          for(PlayerStats ps : psList) {
+               cloud.put(ps.getUUID(), ps);
+          }
+          return cloud;
+     }
+
+     // Copy local data to cloud
+     public void syncCloud() throws IOException, InvalidConfigurationException, SQLException {
+          HashMap<String, PlayerStats> map = loadFromLocal();
+          saveToCloud(map);
+          psMap = map;
+     }
+
+     // Copy cloud data to local
+     public void syncLocal() throws SQLException, IOException {
+          HashMap<String, PlayerStats> map = loadFromCloud();
+          saveToLocal(map);
+          psMap = map;
+     }
 }

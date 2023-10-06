@@ -12,6 +12,7 @@ public class MainCore extends JavaPlugin {
 
      public ConfigHelper config;
      public RankCraft rankCraft;
+     public PermissionList permList;
 
      public StatsDatabase statsDatabase;
 
@@ -30,6 +31,8 @@ public class MainCore extends JavaPlugin {
                     getLogger().warning("Could not init StatsDatabase!");
                }
           }
+
+          permList = new PermissionList();
 
           rankCraft = new RankCraft();
           rankCraft.saveSystem.load();
