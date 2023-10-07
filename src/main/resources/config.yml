@@ -1,5 +1,6 @@
 # RankCraft configuration file
 
+# ***** Database Options ***** #
 # Enable database instead of file-based save system
 EnableDatabase: False
 
@@ -10,3 +11,32 @@ Database:
   database: db
   user: user
   password: password
+
+# ***** Exp Options ***** #
+ExpGain:
+  # Default field affects blocks that are not included in Special or NoExp fields
+  Default:
+    # Exp gained when a player places a block
+    Place: 0.8
+    # Exp gained when a player breaks a block
+    Break: 0.5
+
+  # Modify exp gained from specific blocks
+  # Syntax: '<BLOCK>:<EXP>'
+  Special:
+    Place:
+      - 'DIRT:0.01'
+    Break:
+      - 'GRASS:0.1'
+      - 'STONE:0.2'
+      - 'DIAMOND_ORE:5.0'
+
+  # A list with blocks that will not grant any exp when placed or broken
+  NoExp:
+    - 'TORCH'
+    - 'TALL_GRASS'
+
+# Prevent the player gaining exp by breaking and placing the same blocks
+SaveBlocks: true
+# Memory of such blocks. Note: The higher this number is the more calculations there will be
+BlocksToSave: 10

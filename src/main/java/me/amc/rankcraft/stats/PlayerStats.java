@@ -1,5 +1,6 @@
 package me.amc.rankcraft.stats;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
@@ -122,6 +123,10 @@ public class PlayerStats implements ConfigurationSerializable {
 
      public void addExp(float exp) {
           setExp(getExp() + exp);
+     }
+
+     public void addBlockExp(boolean placed, Material blockMat) {
+          
      }
 
      @Override
