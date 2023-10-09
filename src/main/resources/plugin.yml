@@ -1,6 +1,6 @@
 main: me.amc.rankcraft.MainCore
 name: RankCraft
-version: 2.1.9005
+version: 2.1.9006
 api-version: 1.14
 commands:
   rankcraft:

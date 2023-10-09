@@ -1,11 +1,16 @@
 package me.amc.rankcraft.stats;
 
+import me.amc.rankcraft.ConfigHelper;
+import me.amc.rankcraft.MainCore;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 
 @SerializableAs("PlayerStats")
 public class PlayerStats implements ConfigurationSerializable {
@@ -125,8 +130,13 @@ public class PlayerStats implements ConfigurationSerializable {
           setExp(getExp() + exp);
      }
 
-     public void addBlockExp(boolean placed, Material blockMat) {
-          
+     public void addBlockExp(boolean place, Material blockMat) {
+          ConfigHelper ch = MainCore.instance.config;
+          if(ch.getNoExpMaterialList().contains(blockMat)) return;
+          HashMap<Material, Float> map = ch.getExpSpecialMap(place);
+          if(map.containsKey(blockMat)) addExp(map.get(blockMat));
+          else addExp(place ? ch.expPlaceDefault : ch.expBreakDefault);
+          Bukkit.getPlayer(UUID.fromString(uuid)).sendMessage("Exp:"+getExp());
      }
 
      @Override

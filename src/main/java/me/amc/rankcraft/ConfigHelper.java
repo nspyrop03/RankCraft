@@ -1,7 +1,10 @@
 package me.amc.rankcraft;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ConfigHelper {
@@ -24,10 +27,14 @@ public class ConfigHelper {
      public List<String> noExpList;
      public boolean saveBlocks;
      public int blocksToSave;
+     private List<Material> noExpMaterialList;
+     private HashMap<Material, Float> expSpecialPlaceMap;
+     private HashMap<Material, Float> expSpecialBreakMap;
 
      public ConfigHelper(FileConfiguration config) {
           this.config = config;
           initVariables();
+          initExpLists();
      }
 
      private void initVariables() {
@@ -45,6 +52,32 @@ public class ConfigHelper {
           noExpList = config.getStringList("ExpGain.NoExp");
           saveBlocks = config.getBoolean("SaveBlocks");
           blocksToSave = config.getInt("BlocksToSave");
+     }
+
+     private void initExpLists() {
+          noExpMaterialList = new ArrayList<>();
+          for(String s : noExpList)
+               noExpMaterialList.add(Material.valueOf(s));
+
+          expSpecialPlaceMap = new HashMap<>();
+          for(String s : expPlaceSpecialList) {
+               String[] parts = s.split(":");
+               expSpecialPlaceMap.put(Material.valueOf(parts[0]), Float.valueOf(parts[1]));
+          }
+
+          expSpecialBreakMap = new HashMap<>();
+          for(String s : expBreakSpecialList) {
+               String[] parts = s.split(":");
+               expSpecialBreakMap.put(Material.valueOf(parts[0]), Float.valueOf(parts[1]));
+          }
+     }
+
+     public List<Material> getNoExpMaterialList() {
+          return this.noExpMaterialList;
+     }
+
+     public HashMap<Material, Float> getExpSpecialMap(boolean place) {
+          return place ? this.expSpecialPlaceMap : this.expSpecialBreakMap;
      }
 
 }
