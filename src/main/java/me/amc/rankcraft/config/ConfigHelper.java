@@ -1,4 +1,4 @@
-package me.amc.rankcraft;
+package me.amc.rankcraft.config;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;

@@ -6,7 +6,7 @@
 
     <groupId>me.amc</groupId>
     <artifactId>RankCraft</artifactId>
-    <version>2.1.9005</version>
+    <version>2.1.9007</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -34,7 +34,6 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.1.0</version>
         </dependency>
-
     </dependencies>
 
 </project>

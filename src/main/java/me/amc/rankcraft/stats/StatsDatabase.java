@@ -1,6 +1,6 @@
 package me.amc.rankcraft.stats;
 
-import me.amc.rankcraft.ConfigHelper;
+import me.amc.rankcraft.config.ConfigHelper;
 import me.amc.rankcraft.MainCore;
 
 import java.sql.*;
