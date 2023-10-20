@@ -27,20 +27,7 @@ public class MainCore extends JavaPlugin {
      public void onEnable() {
           instance = this;
           saveDefaultConfig();
-          //No Format no comments
-          //getConfig().options().copyDefaults(true);
-          //saveConfig();
-          /*
-          InputStream customClassStream= this.getClass().getResourceAsStream("/config.yml");
-          InputStreamReader strR = new InputStreamReader(customClassStream);
-          FileConfiguration defaults = YamlConfiguration.loadConfiguration(strR);
-          System.out.println("test: "+defaults.contains("testNewField"));
-          */
           reloadConfig();
-          /*
-          System.out.println("Test: "+getConfig().get("testNewField"));
-          System.out.println("Test 2: "+getConfig().saveToString());
-          */
 
           ConfigUpdater cu = new ConfigUpdater();
           try {
