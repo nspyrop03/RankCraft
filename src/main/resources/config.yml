@@ -40,9 +40,3 @@ ExpGain:
 SaveBlocks: true
 # Memory of such blocks. Note: The higher this number is the more calculations there will be
 BlocksToSave: 10
-
-# Test New Field Comment
-testNewField: 'hello there'
-
-# Test New Field 2
-testNewField2: 'General Kenobiiii'
