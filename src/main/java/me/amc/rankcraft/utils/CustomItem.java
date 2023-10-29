@@ -35,6 +35,18 @@ public class CustomItem {
           this.name = name.replace('&', '§').replace('_', ' ');
      }
 
+     public CustomItem(ItemStack item) {
+          this.item = item;
+          this.type = item.getType();
+          this.meta = item.getItemMeta();
+          this.name = this.meta.getDisplayName();
+          this.lore = this.meta.getLore();
+          this.afterLore = new ArrayList<>();
+          this.enchantments = new HashMap<>();
+          for(Enchantment enc : this.meta.getEnchants().keySet())
+               this.enchantments.put(enc, this.meta.getEnchants().get(enc));
+     }
+
      public ItemStack getItem() {
           return item;
      }
