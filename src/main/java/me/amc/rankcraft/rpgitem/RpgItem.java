@@ -93,10 +93,14 @@ public class RpgItem extends RpgMaterial {
                   "CriticalChance: "+criticalChance,
                   "MinLevel: "+minLevel);
 
+          this.reloadLore();
+
           this.getMeta().getPersistentDataContainer().set(RCUtils.MIN_DAMAGE_KEY, PersistentDataType.FLOAT, minDamage);
           this.getMeta().getPersistentDataContainer().set(RCUtils.MAX_DAMAGE_KEY, PersistentDataType.FLOAT, maxDamage);
           this.getMeta().getPersistentDataContainer().set(RCUtils.CRITICAL_CHANCE_KEY, PersistentDataType.INTEGER, criticalChance);
           this.getMeta().getPersistentDataContainer().set(RCUtils.MIN_LEVEL_KEY, PersistentDataType.INTEGER, minLevel);
+
+          this.getItem().setItemMeta(this.getMeta());
 
           return this;
      }

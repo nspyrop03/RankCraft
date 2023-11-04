@@ -10,6 +10,7 @@ public class CommandsList {
      private PermissionList perms;
 
      public SyncCommand syncCommand;
+     public GiveCommand giveCommand;
 
      public CommandsList() {
           rc = MainCore.instance.rankCraft;
@@ -23,6 +24,9 @@ public class CommandsList {
      private void initCommands() {
           syncCommand = new SyncCommand();
           rc.registerSubCommand(syncCommand);
+
+          giveCommand = new GiveCommand();
+          rc.registerSubCommand(giveCommand);
      }
 
      private void initAliases() {}

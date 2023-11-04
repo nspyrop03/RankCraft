@@ -117,6 +117,13 @@ public class CustomItem {
           this.enchantments.put(enchantment, level);
      }
 
+     public void reloadLore() {
+          List<String> fullLore = new ArrayList<>();
+          fullLore.addAll(this.lore);
+          fullLore.addAll(this.afterLore);
+          this.meta.setLore(fullLore);
+     }
+
      public CustomItem buildSimpleItem(boolean isWithEnchantColor) {
           this.meta.setDisplayName(this.name);
           List<String> fullLore = new ArrayList<>();
@@ -136,10 +143,7 @@ public class CustomItem {
      public CustomItem build() {
           this.meta.setDisplayName(this.name);
 
-          List<String> fullLore = new ArrayList<>();
-          fullLore.addAll(this.lore);
-          fullLore.addAll(this.afterLore);
-          this.meta.setLore(fullLore);
+          reloadLore();
 
           for(Enchantment key : enchantments.keySet())
                this.meta.addEnchant(key, enchantments.get(key), true);
