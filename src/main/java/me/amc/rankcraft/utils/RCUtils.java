@@ -16,6 +16,7 @@ public class RCUtils {
      public static final NamespacedKey MAX_DAMAGE_KEY = new NamespacedKey(MainCore.instance, "max_damage");
      public static final NamespacedKey CRITICAL_CHANCE_KEY = new NamespacedKey(MainCore.instance, "critical_chance");
      public static final NamespacedKey MIN_LEVEL_KEY = new NamespacedKey(MainCore.instance, "min_level");
+     public static final NamespacedKey DEFENSE_KEY = new NamespacedKey(MainCore.instance, "defense");
 
      public static String textedUUID(Player p) {
           return p.getUniqueId().toString();

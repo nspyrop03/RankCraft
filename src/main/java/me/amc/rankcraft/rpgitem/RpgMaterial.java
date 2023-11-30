@@ -8,21 +8,23 @@ import org.bukkit.persistence.PersistentDataType;
 public class RpgMaterial extends CustomItem {
 
      private Rarity rarity;
+     private int minLevel;
      private int customModelId; // -1 used for no id
 
-     public RpgMaterial(Material type, Rarity rarity, int customModelId) {
+     public RpgMaterial(Material type, Rarity rarity, int minLevel, int customModelId) {
           super(type);
           this.rarity = rarity;
           this.customModelId = customModelId;
-          this.addAfterLore("Rarity: "+rarity); // change this!
+          this.minLevel = minLevel;
+          this.addAfterLore("MinLevel: "+minLevel, "Rarity: "+rarity); // change this!
      }
 
-     public RpgMaterial(Material type, Rarity rarity) {
-          this(type, rarity, -1);
+     public RpgMaterial(Material type, int minLevel, Rarity rarity) {
+          this(type, rarity, minLevel,-1);
      }
 
      public RpgMaterial(Material type, String name) {
-          this(type, Rarity.COMMON, -1);
+          this(type, Rarity.COMMON, 0, -1);
           this.setName(name.replace('&', '§').replace('_', ' '));
      }
 
@@ -42,6 +44,14 @@ public class RpgMaterial extends CustomItem {
           this.customModelId = customModelId;
      }
 
+     public int getMinLevel() {
+          return this.minLevel;
+     }
+
+     public void setMinLevel(int minLevel) {
+          this.minLevel = minLevel;
+     }
+
      @Override
      public RpgMaterial build() {
           super.build();
@@ -49,6 +59,7 @@ public class RpgMaterial extends CustomItem {
           if(this.customModelId > 0)
                this.getMeta().setCustomModelData(this.customModelId);
           this.getMeta().getPersistentDataContainer().set(RCUtils.RARITY_KEY, PersistentDataType.INTEGER, this.rarity.getLevel());
+          this.getMeta().getPersistentDataContainer().set(RCUtils.MIN_LEVEL_KEY, PersistentDataType.INTEGER, minLevel);
 
           this.getItem().setItemMeta(this.getMeta());
 

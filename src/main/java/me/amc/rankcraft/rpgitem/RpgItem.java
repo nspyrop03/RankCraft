@@ -12,14 +12,12 @@ public class RpgItem extends RpgMaterial {
      private float minDamage;
      private float maxDamage;
      private int criticalChance;
-     private int minLevel;
 
      public RpgItem(Material type, String name, float minDamage, float maxDamage, int criticalChance, int minLevel, Rarity rarity) {
-          super(type, rarity);
+          super(type, minLevel, rarity);
           this.minDamage = minDamage;
           this.maxDamage = maxDamage;
           this.criticalChance = criticalChance;
-          this.minLevel = minLevel;
           this.setName(name.replace('&', '§').replace('_', ' '));
      }
 
@@ -76,29 +74,19 @@ public class RpgItem extends RpgMaterial {
           this.criticalChance = criticalChance;
      }
 
-     public int getMinLevel() {
-          return minLevel;
-     }
-
-     public void setMinLevel(int minLevel) {
-          this.minLevel = minLevel;
-     }
-
      @Override
      public RpgItem build() {
           super.build();
 
           this.addLore("MinDamage: "+ RCUtils.getRoundedNumber(minDamage, 2),
                   "MaxDamage: "+RCUtils.getRoundedNumber(maxDamage, 2),
-                  "CriticalChance: "+criticalChance,
-                  "MinLevel: "+minLevel);
+                  "CriticalChance: "+criticalChance);
 
           this.reloadLore();
 
           this.getMeta().getPersistentDataContainer().set(RCUtils.MIN_DAMAGE_KEY, PersistentDataType.FLOAT, minDamage);
           this.getMeta().getPersistentDataContainer().set(RCUtils.MAX_DAMAGE_KEY, PersistentDataType.FLOAT, maxDamage);
           this.getMeta().getPersistentDataContainer().set(RCUtils.CRITICAL_CHANCE_KEY, PersistentDataType.INTEGER, criticalChance);
-          this.getMeta().getPersistentDataContainer().set(RCUtils.MIN_LEVEL_KEY, PersistentDataType.INTEGER, minLevel);
 
           this.getItem().setItemMeta(this.getMeta());
 
